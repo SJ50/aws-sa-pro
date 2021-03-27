@@ -34,6 +34,7 @@ echo "Instance B IPv4 DNS Name = $EC2InstaceBIPv4DNS"
 EC2RoleName=$(aws iam list-roles --query Roles[].RoleName | grep InstanceRole | cut -f2 -d "\"")
 echo ""
 echo "Instance ROLE Name = $EC2RoleName"
+echo ""
 echo "follow tutorial from 6:20"
 echo "command to run in EC2 instace to find 'AccessKeyId' 'SecretAccessKey' 'Token' is as follows"
 echo "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/$EC2RoleName"
