@@ -4,7 +4,7 @@
 aws configure set cli_auto_prompt on-partial
 
 # create cloudformation stack
-aws cloudformation create-stack --stack-name A4LHostingInc --template-body file://A4LHostingInc.yaml --capabilities CAPABILITY_IAM
+aws cloudformation create-stack --stack-name A4LHostingInc --template-body file://01_DEMOSETUP/A4LHostingInc.yaml --capabilities CAPABILITY_IAM
 
 #check creat completion of stack
 aws cloudformation describe-stacks --stack-name A4LHostingInc --query Stacks[0].StackStatus
