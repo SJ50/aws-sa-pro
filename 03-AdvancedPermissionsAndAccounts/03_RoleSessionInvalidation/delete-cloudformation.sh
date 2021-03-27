@@ -1,7 +1,7 @@
 #!/bin/bash
 
 # dirty way to find instance role
-EC2RoleName=$(aws iam list-roles --query Roles[].RoleName | grep InstanceRole | cut -f2 -d "\"")
+EC2RoleName=$(aws iam list-roles --query 'Roles[?contains(RoleName, `InstanceRole`) == `true`]|[0].RoleName' --output text)
 
 #delete Instance role policy 
 PolicyName=$(aws iam list-role-policies --role-name $EC2RoleName --query PolicyNames[] --output text)
