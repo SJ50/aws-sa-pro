@@ -5,9 +5,9 @@ bucket1=$(aws s3 ls --profile prod | cut -f3 -d " " | awk 'NR==1')
 bucket2=$(aws s3 ls --profile prod | cut -f3 -d " " | awk 'NR==2')
 bucket3=$(aws s3 ls --profile prod | cut -f3 -d " " | awk 'NR==3')
 
-aws s3 rm s3://$bucket1 --recursive
-aws s3 rm s3://$bucket2 --recursive
-aws s3 rm s3://$bucket3 --recursive
+aws s3 rm s3://$bucket1 --recursive --profile prod
+aws s3 rm s3://$bucket2 --recursive --profile prod
+aws s3 rm s3://$bucket3 --recursive --profile prod
 
 # delete S3 bucket stack in Prod Account
 S3Buckets=Buckets
