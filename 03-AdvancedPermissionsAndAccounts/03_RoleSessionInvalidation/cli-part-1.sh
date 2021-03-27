@@ -30,11 +30,12 @@ echo ""
 echo "Instance B IPv4 = $EC2InstaceBIPv4"
 echo "Instance B IPv4 DNS Name = $EC2InstaceBIPv4DNS"
 
-# dirty way to find instace role
-EC2RoleName=$(aws iam list-roles --query Roles[].RoleName | grep InstanceRole | cut -f2 -d "\"")
+# find instace role name
+EC2RoleName=$(aws iam list-roles --query 'Roles[?contains(RoleName, `InstanceRole`) == `true`]|[0].RoleName' --output text)
 echo ""
 echo "Instance ROLE Name = $EC2RoleName"
 echo ""
+
 echo "follow tutorial from 6:20"
 echo "command to run in EC2 instace to find 'AccessKeyId' 'SecretAccessKey' 'Token' is as follows"
 echo "curl http://169.254.169.254/latest/meta-data/iam/security-credentials/$EC2RoleName"
