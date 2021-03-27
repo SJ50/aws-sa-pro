@@ -1,7 +1,7 @@
 #!/bin/bash
 
 #  set cli mode to partial
-aws configure set cli_auto_prompt on-partial
+export AWS_CLI_AUTO_PROMPT=on-partial
 
 # create cloudformation stack
 aws cloudformation create-stack --stack-name A4LHostingInc --template-body file://01_DEMOSETUP/A4LHostingInc.yaml --capabilities CAPABILITY_IAM
