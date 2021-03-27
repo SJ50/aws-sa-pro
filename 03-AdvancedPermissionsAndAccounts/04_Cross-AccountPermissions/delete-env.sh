@@ -33,4 +33,7 @@ while  [ "$(aws cloudformation describe-stacks --stack-name $StackName --query S
   sleep 1
 done 
 
-echo "delete IAM user bob"
+echo "deleted IAM user bob"
+echo ""
+echo "cloudformation stacks deleted successfully"
+echo ""
