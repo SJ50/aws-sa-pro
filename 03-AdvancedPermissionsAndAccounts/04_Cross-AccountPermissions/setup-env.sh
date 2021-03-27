@@ -1,6 +1,6 @@
 #!/bin/bash
 
-#  set cli mode to partial
+# set cli mode to partial
 aws configure set cli_auto_prompt on-partial
 
 StackName=user-bob
@@ -16,10 +16,11 @@ while  [ "$(aws cloudformation describe-stacks --stack-name $StackName --query S
   aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text
   sleep 1
 done
-  
+
+# find Master Account ID
 MasterAccountID=$(aws sts get-caller-identity --query Account --output text)
   
-#creating 3 S3 buckets and IAM Role to assume by Master Account in prod account
+# creating 3 S3 buckets and IAM Role to assume by Master Account in prod account
 echo ""
 echo "creating 3 S3 buckets in PROD Account"
 
@@ -35,16 +36,12 @@ while  [ "$(aws cloudformation describe-stacks --stack-name $S3Buckets --query S
   aws cloudformation describe-stacks --stack-name $S3Buckets --query Stacks[0].StackStatus --profile prod --output text
   sleep 1
 done    
-
-#find IAM Role name
-
-IAMRoleName=$(aws iam list-roles --profile prod --query 'Roles[?contains(RoleName, `Buckets`) == `true`]|[0].RoleName' --output text)
-echo "IAM Role Name = $IAMRoleName"
+# find Prod Account ID
 echo ""
-PRODAccountID=$(aws sts get-caller-identity --profile prod --query Account --output text)
-  
+PRODAccountID=$(aws sts get-caller-identity --profile prod --query Account --output text)  
 echo "Production Account ID = $PRODAccountID"
-  
+ 
+# create bucket URLs" 
 echo ""
 bucket1=$(aws s3 ls --profile prod | cut -f3 -d " " | awk 'NR==1')
 bucket2=$(aws s3 ls --profile prod | cut -f3 -d " " | awk 'NR==2')
@@ -54,11 +51,18 @@ echo "bucket 1 url = https://console.aws.amazon.com/s3/buckets/$bucket1?region=u
 echo "bucket 2 url = https://console.aws.amazon.com/s3/buckets/$bucket2?region=us-east-1&tab=objects"
 echo "bucket 3 url = https://console.aws.amazon.com/s3/buckets/$bucket3?region=us-east-1&tab=objects"
 
+# find Account Aliases and generate signin URL, print username and password
 AccountAliases=$(aws iam list-account-aliases --query AccountAliases --output text)
 echo "user url to sign in as bob user https://$AccountAliases.signin.aws.amazon.com/console/"
 BobUserName=$(aws iam list-users --query 'Users[?contains(UserName, `bob`) == `true`]|[0].UserName' --output text)  
 echo "username = $BobUserName"
 echo "password = boBpassword*1"
+
+# find Master Account Canonical ID
 MasterAccountCanonicalID=$(aws s3api list-buckets --query Owner.ID --output text)
 echo "Master Account Canonical_ID = $MasterAccountCanonicalID"
+
+# find IAM Role name to assume by bob user in Master Account
+IAMRoleName=$(aws iam list-roles --profile prod --query 'Roles[?contains(RoleName, `Buckets`) == `true`]|[0].RoleName' --output text)
+echo "IAM Role Name = $IAMRoleName"
 
