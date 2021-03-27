@@ -17,8 +17,11 @@ EC2InstaceB_AssociationID=$(aws ec2 describe-iam-instance-profile-associations -
 Instace_Profile_Arn=$(aws ec2 describe-iam-instance-profile-associations --filters Name=instance-id,Values=[$EC2InstaceA_ID] --query IamInstanceProfileAssociations[].IamInstanceProfile[].Arn --output text)
 
 #Instead of rebooting EC2 instance reassociate Instance Profile 
+echo "reassociating Instance A Instance Profile"
 aws ec2 disassociate-iam-instance-profile --association-id $EC2InstaceA_AssociationID
 aws ec2 associate-iam-instance-profile --instance-id $EC2InstaceA_ID --iam-instance-profile Arn=$Instace_Profile_Arn
+echo "reassociating Instance B Instance Profile"
 aws ec2 disassociate-iam-instance-profile --association-id $EC2InstaceB_AssociationID
 aws ec2 associate-iam-instance-profile --instance-id $EC2InstaceB_ID --iam-instance-profile Arn=$Instace_Profile_Arn
+echo "reassociation finished"
 
