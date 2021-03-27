@@ -7,7 +7,11 @@ aws configure set cli_auto_prompt on-partial
 aws cloudformation create-stack --stack-name A4LHostingInc --template-body file://01_DEMOSETUP/A4LHostingInc.yaml --capabilities CAPABILITY_IAM
 
 #check creat completion of stack
-aws cloudformation describe-stacks --stack-name A4LHostingInc --query Stacks[0].StackStatus
+while  [ "$(aws cloudformation describe-stacks --stack-name A4LHostingInc --query Stacks[0].StackStatus --output text)" != "CREATE_COMPLETE" ]; do 
+  aws cloudformation describe-stacks --stack-name A4LHostingInc --query Stacks[0].StackStatus --output text
+  sleep 1
+done
+
 
 #find physical ID of instances and assign to variables
 EC2InstaceAID=$(aws cloudformation describe-stack-resource --stack-name A4LHostingInc --logical-resource-id EC2InstanceA --query StackResourceDetail.PhysicalResourceId --output text)
