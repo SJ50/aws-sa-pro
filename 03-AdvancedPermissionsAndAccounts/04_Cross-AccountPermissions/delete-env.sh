@@ -32,3 +32,5 @@ while  [ "$(aws cloudformation describe-stacks --stack-name $StackName --query S
   aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text
   sleep 1
 done 
+
+echo "delete IAM user bob"
