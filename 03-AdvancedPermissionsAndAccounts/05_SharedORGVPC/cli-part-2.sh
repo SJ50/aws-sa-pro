@@ -22,7 +22,7 @@ EC2_Instance_ID=$(aws ec2 run-instances --image-id resolve:ssm:/aws/service/ami-
         --output text \
         --profile prod)
 
-EC2_Public_IPv4=$(aws ec2 describe-instances --instance-ids i-0ef80eae2feded7af --query Reservations[].Instances[].PublicIpAddress --output text --profile prod)
+EC2_Public_IPv4=$(aws ec2 describe-instances --instance-ids $EC2_Instance_ID --query Reservations[].Instances[].PublicIpAddress --output text --profile prod)
 
 echo "Public IPv4 of EC2 Instace = $EC2_Public_IPv4"
 
