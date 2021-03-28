@@ -20,18 +20,22 @@ SG_ID=$(aws ec2 describe-security-groups --filters Name=vpc-id,Values=$nondefaul
 # delete Security Group
 aws ec2 delete-security-group --group-id $SG_ID --profile prod 
 
+# delete resource share
+ramArn=$(aws ram get-resource-shares --resource-owner SELF --query 'resourceShares[?status == `ACTIVE`]|[0].resourceShareArn' --output text)
+aws ram delete-resource-share --resource-share-arn $ramArn
+
 # delete NAT GateWay stack
 StackName_NGW=NatGW
 aws cloudformation delete-stack \
     --stack-name $StackName_NGW 
     
 # varifying cloudformation stack deleted  
-while  [ "$(aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text)" = "DELETE_IN_PROGRESS" ]; do 
-  aws cloudformation describe-stacks --stack-name $StackName_NGW --profile prod --query Stacks[0].StackStatus --output text
-  sleep 1
-done    
-echo "NAT GateWay stack deleted"
-echo ""
+#while  [ "$(aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text)" = "DELETE_IN_PROGRESS" ]; do 
+#  aws cloudformation describe-stacks --stack-name $StackName_NGW --profile prod --query Stacks[0].StackStatus --output text
+#  sleep 1
+#done    
+#echo "NAT GateWay stack deleted"
+#echo ""
 
 # delete NAT GateWay stack
 StackName=vpc
