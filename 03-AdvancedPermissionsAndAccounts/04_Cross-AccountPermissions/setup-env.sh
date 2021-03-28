@@ -1,7 +1,7 @@
 #!/bin/bash
 
-# set cli mode to partial
-aws configure set cli_auto_prompt on-partial
+#  set cli mode to partial
+export AWS_CLI_AUTO_PROMPT=on-partial
 
 StackName=user-bob
 
