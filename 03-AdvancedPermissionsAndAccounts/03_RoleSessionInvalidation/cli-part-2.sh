@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#  set cli mode to partial
+export AWS_CLI_AUTO_PROMPT=on-partial
+
 #revoke session of role
 
 # dirty way to find instance role
