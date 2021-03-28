@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#  set cli mode to partial
+export AWS_CLI_AUTO_PROMPT=on-partial
+
 # find instance role
 EC2RoleName=$(aws iam list-roles --query 'Roles[?contains(RoleName, `InstanceRole`) == `true`]|[0].RoleName' --output text)
 
