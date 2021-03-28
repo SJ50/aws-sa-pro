@@ -1,5 +1,8 @@
 #!/bin/bash
 
+#  set cli mode to partial
+export AWS_CLI_AUTO_PROMPT=on-partial
+
 # empty S3 bucket so it can be remove by cloudformation stack
 bucket1=$(aws s3 ls --profile prod | cut -f3 -d " " | awk 'NR==1')
 bucket2=$(aws s3 ls --profile prod | cut -f3 -d " " | awk 'NR==2')
