@@ -32,7 +32,7 @@ aws cloudformation delete-stack \
     
 # varifying cloudformation stack deleted  
 while  [ "$(aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text)" = "DELETE_IN_PROGRESS" ]; do 
-  aws cloudformation describe-stacks --stack-name $StackName_NGW --profile prod --query Stacks[0].StackStatus --output text
+  aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text
   sleep 1
 done    
 echo "NAT GateWay stack deleted"
