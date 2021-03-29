@@ -45,7 +45,7 @@ aws cloudformation delete-stack \
     
 # varifying cloudformation stack deleted  
 while  [ "$(aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text)" = "DELETE_IN_PROGRESS" ]; do 
-  aws cloudformation describe-stacks --stack-name $StackName --profile prod --query Stacks[0].StackStatus --output text
+  aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text
   sleep 1
 done    
 echo "VPC stack deleted"
