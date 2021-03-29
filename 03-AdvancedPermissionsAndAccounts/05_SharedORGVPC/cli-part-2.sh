@@ -22,6 +22,11 @@ EC2_Instance_ID=$(aws ec2 run-instances --image-id resolve:ssm:/aws/service/ami-
         --output text \
         --profile prod)
 
+while [ "$(aws ec2 describe-instances --instance-ids $EC2_Instance_ID --query Reservations[].Instances[].State[].Code --output text --profile prod)" != 16 ]; do
+        aws ec2 describe-instances --instance-ids $EC2_Instance_ID --query Reservations[].Instances[].State[].Name --output text --profile prod
+        sleep 1
+done       
+
 EC2_Public_IPv4=$(aws ec2 describe-instances --instance-ids $EC2_Instance_ID --query Reservations[].Instances[].PublicIpAddress --output text --profile prod)
 
 echo "Public IPv4 of EC2 Instace = $EC2_Public_IPv4"
