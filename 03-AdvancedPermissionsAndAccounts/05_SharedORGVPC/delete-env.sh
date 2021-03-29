@@ -10,7 +10,7 @@ PROD_EC2_ID=$(aws ec2 describe-instances --query 'Reservations[].Instances[].Ins
 aws ec2 terminate-instances --instance-ids $PROD_EC2_ID --profile prod
 
 while [ "$(aws ec2 describe-instances --instance-ids $PROD_EC2_ID --query Reservations[].Instances[].State[].Code --output text --profile prod)" != 48 ]; do
-        aws ec2 describe-instances --instance-ids $PROD_EC2_ID --query Reservations[].Instances[].State[].Name --output text --profile prod
+        echo 'EC2 instance is "$(aws ec2 describe-instances --instance-ids $PROD_EC2_ID --query Reservations[].Instances[].State[].Name --output text --profile prod)"'
         sleep 1
 done   
 
@@ -32,7 +32,7 @@ aws cloudformation delete-stack \
     
 # varifying cloudformation stack deleted  
 while  [ "$(aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text)" = "DELETE_IN_PROGRESS" ]; do 
-  aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text
+  echo '$StackName_NGW is "$(aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text)"'
   sleep 1
 done    
 echo "NAT GateWay stack deleted"
@@ -45,7 +45,7 @@ aws cloudformation delete-stack \
     
 # varifying cloudformation stack deleted  
 while  [ "$(aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text)" = "DELETE_IN_PROGRESS" ]; do 
-  aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text
+  echo '$StackName_NGW is "$(aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text)"'
   sleep 1
 done    
 echo "VPC stack deleted"
