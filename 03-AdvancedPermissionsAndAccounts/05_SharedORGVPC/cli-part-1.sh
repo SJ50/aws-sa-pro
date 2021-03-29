@@ -12,7 +12,7 @@ aws cloudformation create-stack --stack-name $StackName \
     
 # varifying cloudformation creation
 while  [ "$(aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text)" != "CREATE_COMPLETE" ]; do 
-  aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text
+  echo "Status of stack $StackName - $(aws cloudformation describe-stacks --stack-name $StackName --query Stacks[0].StackStatus --output text)"
   sleep 1
 done
 
@@ -24,7 +24,7 @@ aws cloudformation create-stack --stack-name $StackName_NGW \
     
 # varifying cloudformation creation
 while  [ "$(aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text)" != "CREATE_COMPLETE" ]; do 
-  aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text
+  echo "Status of stack $StackName_NGW - $(aws cloudformation describe-stacks --stack-name $StackName_NGW --query Stacks[0].StackStatus --output text)"
   sleep 1
 done
 
