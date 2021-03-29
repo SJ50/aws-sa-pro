@@ -1,5 +1,5 @@
 # aws-sa-pro
-Course Files for AWS Certified Solutions Architect - Professional - Adrian Cantrill
+Course Files for AWS Certified Solutions Architect - Professional - Adrian Cantrill, , including BASH scripts to create, work and delete hands on environments
 
 If you find something wrong feel free to let me know at sapro-feedback@cantrill.io
 
